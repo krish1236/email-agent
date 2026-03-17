@@ -80,24 +80,24 @@ def run(ctx, input):
         )
     
     # ── Step 3: Send digest email (COMMIT — requires approval) ──
+    # No preview: platform will auto-build context from send_email params (deferred approval).
     with ctx.commit_step(
         "send_digest",
         description=f"Send email digest to {recipient or 'self'}",
     ):
         digest = ctx.state["digest"]
         email_count = ctx.state["email_count"]
-        
-        # If no recipient specified, send to self
         send_to = recipient or "me"
-        
+        subject = f"Your Email Digest — {email_count} emails summarized"
+
         ctx.log(f"Sending digest to {send_to}...")
-        
+
         ctx.tools.gmail.send_email(
             to=send_to,
-            subject=f"Your Email Digest — {email_count} emails summarized",
+            subject=subject,
             body=digest
         )
-        
+
         ctx.log(f"Digest sent successfully to {send_to}")
     
     return {
