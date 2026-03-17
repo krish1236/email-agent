@@ -15,6 +15,7 @@ from agent_runtime import AgentRuntime
 app = AgentRuntime()
 
 
+@app.agent("email-digest")
 def run(ctx, input):
     """
     Main agent function.

@@ -1,1 +1,2 @@
-agent-runtime>=0.1.0
+# agent-runtime is injected by the platform at build time; use >=0.0.1 if building locally
+agent-runtime>=0.0.1
