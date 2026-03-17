@@ -1,0 +1,6 @@
+name: email-digest-agent
+entrypoint: agent:run
+python_version: "3.11"
+browser: false
+tools:
+  - gmail
