@@ -80,14 +80,16 @@ def run(ctx, input):
         )
     
     # ── Step 3: Send digest email (COMMIT — requires approval) ──
-    # No preview: platform will auto-build context from send_email params (deferred approval).
+    # Standard pattern: get real email for "self" via get_my_email(); send_email() requires a valid address.
     with ctx.commit_step(
         "send_digest",
         description=f"Send email digest to {recipient or 'self'}",
     ):
         digest = ctx.state["digest"]
         email_count = ctx.state["email_count"]
-        send_to = recipient or "me"
+        send_to = recipient
+        if not send_to:
+            send_to = ctx.tools.gmail.get_my_email()
         subject = f"Your Email Digest — {email_count} emails summarized"
 
         ctx.log(f"Sending digest to {send_to}...")
